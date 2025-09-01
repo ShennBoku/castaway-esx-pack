@@ -8,7 +8,7 @@ local SocietiesByName = {}
 function GetSociety(name)
 	return SocietiesByName[name]
 end
-exports("GetSociety", GetSociety)
+exports('GetSociety', GetSociety)
 
 function registerSociety(name, label, account, datastore, inventory, data)
 	if SocietiesByName[name] then
@@ -16,20 +16,29 @@ function registerSociety(name, label, account, datastore, inventory, data)
 		return
 	end
 
-	local society = {
-		name = name,
-		label = label,
-		account = account,
-		datastore = datastore,
-		inventory = inventory,
-		data = data
-	}
-
+	local society = { name = name, label = label, account = account, datastore = datastore, inventory = inventory, data = data }
 	SocietiesByName[name] = society
 	table.insert(RegisteredSocieties, society)
+	print(('^7[^5KYG^7] ^2Registering Society for %s (^1%s^2).^0'):format(label, name))
 end
 AddEventHandler('esx_society:registerSociety', registerSociety)
-exports("registerSociety", registerSociety)
+exports('registerSociety', registerSociety)
+
+AddEventHandler('onResourceStart', function(resourceName)
+	if resourceName ~= 'kyg_fw' then return end
+
+	local JobListing = ESX.GetJobs()
+	while json.encode(JobListing) == '[]' do
+		print(('^7[^5KYG^7] ^1WARNING: ^7No jobs found, retrying in 3 seconds.^0'))
+		Wait(3000) JobListing = ESX.GetJobs()
+	end
+
+	for k, v in pairs(JobListing) do
+		if (v.whitelisted or v.name:sub(0, 6) == 'bsfam_') and not SocietiesByName[v.name] then
+			registerSociety(v.name, v.label, 'society_' .. v.name, 'society_' .. v.name, 'society_' .. v.name, { type = 'public' })
+		end
+	end
+end)
 
 AddEventHandler('esx_society:getSocieties', function(cb)
 	cb(RegisteredSocieties)
@@ -50,7 +59,7 @@ AddEventHandler('esx_society:checkSocietyBalance', function(society)
 	end
 
 	TriggerEvent('esx_addonaccount:getSharedAccount', society.account, function(account)
-		TriggerClientEvent("esx:showNotification", xPlayer.source, TranslateCap('check_balance', ESX.Math.GroupDigits(account.money)))
+		TriggerClientEvent('esx:showNotification', xPlayer.source, TranslateCap('check_balance', ESX.Math.GroupDigits(account.money)))
 	end)
 end)
 
@@ -115,7 +124,7 @@ AddEventHandler('esx_society:washMoney', function(society, amount)
 		return print(('[^3WARNING^7] Player ^5%s^7 attempted to wash money in society - ^5%s^7!'):format(source, society))
 	end
 	if amount and amount > 0 and account.money >= amount then
-		xPlayer.removeAccountMoney('black_money', amount, "Washing")
+		xPlayer.removeAccountMoney('black_money', amount, 'Washing')
 
 		MySQL.insert('INSERT INTO society_moneywash (identifier, society, amount) VALUES (?, ?, ?)', {xPlayer.identifier, society, amount},
 		function(rowsChanged)
@@ -286,13 +295,13 @@ ESX.RegisterServerCallback('esx_society:setJob', function(source, cb, identifier
 
 	if actionType == 'hire' then
 		xTarget.showNotification(TranslateCap('you_have_been_hired', job))
-		xPlayer.showNotification(TranslateCap("you_have_hired", xTarget.getName()))
+		xPlayer.showNotification(TranslateCap('you_have_hired', xTarget.getName()))
 	elseif actionType == 'promote' then
 		xTarget.showNotification(TranslateCap('you_have_been_promoted'))
-		xPlayer.showNotification(TranslateCap("you_have_promoted", xTarget.getName(), xTarget.getJob().label))
+		xPlayer.showNotification(TranslateCap('you_have_promoted', xTarget.getName(), xTarget.getJob().label))
 	elseif actionType == 'fire' then
 		xTarget.showNotification(TranslateCap('you_have_been_fired', xTarget.getJob().label))
-		xPlayer.showNotification(TranslateCap("you_have_fired", xTarget.getName()))
+		xPlayer.showNotification(TranslateCap('you_have_fired', xTarget.getName()))
 	end
 
 	cb()

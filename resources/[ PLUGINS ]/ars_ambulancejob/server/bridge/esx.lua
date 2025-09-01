@@ -65,12 +65,5 @@ end
 
 ESX.RegisterUsableItem(Config.MedicBagItem, function(source)
     if not hasJob(source, Config.EmsJobs) then return end
-
     TriggerClientEvent("ars_ambulancejob:placeMedicalBag", source)
-end)
-
-CreateThread(function()
-    for k, v in pairs(Config.EmsJobs) do
-        TriggerEvent('esx_society:registerSociety', v, v, 'society_' .. v, 'society_' .. v, 'society_' .. v, { type = 'public' })
-    end
 end)
