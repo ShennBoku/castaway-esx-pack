@@ -3,6 +3,14 @@ if Config.Framework ~= 'qb' then return end
 
 QBCore = exports['qb-core']:GetCoreObject()
 
+AddEventHandler('QBCore:Server:PlayerLoaded', function(Player)
+    kServer.Players[tostring(Player.PlayerData.source)] = GetPlayerName(Player.PlayerData.source)
+end)
+
+AddEventHandler('QBCore:Server:OnPlayerUnload', function(playerId)
+    kServer.Players[tostring(playerId)] = nil
+end)
+
 RegisterNetEvent('hospital:server:SetDeathStatus', function(deathStatus)
     if not source then return end
     Player(source).state:set('dead', deathStatus, true)

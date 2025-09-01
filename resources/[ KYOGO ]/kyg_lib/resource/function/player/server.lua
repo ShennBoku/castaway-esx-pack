@@ -7,6 +7,13 @@ function kyg.player.isDead(plyId)
     return Player(plyId).state.laststand or Player(plyId).state.dead or false
 end exports('isDead', kyg.player.isDead)
 
+--- Check Player is Valid (Server-Side)
+---@param plyId number Player ID
+---@return boolean
+function kyg.player.isValid(plyId)
+    return kServer.Players[tostring(plyId)] and true or false
+end
+
 --- Check Player is Handsup (Server-Side)
 ---@param plyId number Player ID
 ---@param plyPed? number # Optional Player Ped

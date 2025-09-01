@@ -3,11 +3,13 @@ if Config.Framework ~= 'esx' then return end
 
 ESX = exports['es_extended']:getSharedObject()
 
-AddEventHandler('esx:playerLoaded', function(_, xPlayer)
-    Player(xPlayer.source).state:set('isLoggedIn', true, true)
+AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
+    kServer.Players[tostring(playerId)] = GetPlayerName(playerId)
+    Player(playerId).state:set('isLoggedIn', true, true)
 end)
 
 AddEventHandler('esx:playerDropped', function(playerId)
+    kServer.Players[tostring(playerId)] = nil
     Player(playerId).state:set('isLoggedIn', false, true)
 end)
 
