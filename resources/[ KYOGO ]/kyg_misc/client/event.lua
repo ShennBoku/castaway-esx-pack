@@ -15,9 +15,8 @@ AddEventHandler('esx:enteringVehicle', function(vehicle, plate, seat, netId)
     end
 end)
 
-RegisterNetEvent('kyg:exitLog', function(id, crds, identifier, reason, name)
+RegisterNetEvent('kyg:exitLog', function(id, crds, identifier, reason)
     local displaying = true
-
     local function ExitLog1(x, y, z, text)
         local onScreen, _x, _y = World3dToScreen2d(x, y, z)
         SetTextScale(0.45, 0.45)
@@ -52,7 +51,7 @@ RegisterNetEvent('kyg:exitLog', function(id, crds, identifier, reason, name)
             Wait(5)
             local pcoords = GetEntityCoords(cache.ped)
             if #(crds - pcoords) < 15.0 then
-                ExitLog2(crds.x, crds.y, crds.z+0.15, name .. ' exit from server.')
+                ExitLog2(crds.x, crds.y, crds.z+0.15, identifier.name .. ' exit from server.')
                 if identifier.discord ~= '' then
                     ExitLog1(crds.x, crds.y, crds.z, '[DISCORD] ' .. identifier.discord .. "\nReason: " .. reason)
                 else
