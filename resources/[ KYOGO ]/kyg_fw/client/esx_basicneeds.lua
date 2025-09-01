@@ -75,7 +75,7 @@ AddEventHandler('esx_status:loaded', function()
         end
     end)
 
-    TriggerEvent('esx_status:registerStatus', 'stress', 1000000, '#0C98F1', function() return true end, function(status)
+    TriggerEvent('esx_status:registerStatus', 'stress', 0, 'FF7A0707', function() return true end, function(status)
 		if IsDead or GetPlayerInvincible(cache.playerId) then
 			status.remove(100)
 		else
