@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-ExtraLight.woff2') format('woff2'),
+        url('Oxanium-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-Bold.woff2') format('woff2'),
+        url('Oxanium-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-ExtraBold.woff2') format('woff2'),
+        url('Oxanium-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-Medium.woff2') format('woff2'),
+        url('Oxanium-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-Regular.woff2') format('woff2'),
+        url('Oxanium-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-Light.woff2') format('woff2'),
+        url('Oxanium-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('Oxanium-SemiBold.woff2') format('woff2'),
+        url('Oxanium-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+

@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'Akrobat';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Akrobat'), url('Akrobat-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat Light';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Akrobat Light'), url('Akrobat-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat ExtraLight';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Akrobat ExtraLight'), url('Akrobat-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat SemiBold';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Akrobat SemiBold'), url('Akrobat-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat Bold';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Akrobat Bold'), url('Akrobat-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat ExtraBold';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Akrobat ExtraBold'), url('akrobat-extrabold-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Akrobat Black';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Akrobat Black'), url('Akrobat-Black.woff') format('woff');
+}

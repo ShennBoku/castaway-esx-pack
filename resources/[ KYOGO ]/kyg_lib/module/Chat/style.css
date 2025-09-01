@@ -1,0 +1,106 @@
+/* @import url(http://fivem-assets.localx/fonts/pack.css); */
+/* @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css); */
+
+@import url(nui://kyg_assets/public/fonts/pack.css);
+@import url(nui://kyg_assets/public/css/fontawesome.min.css);
+
+* {
+    font-family: 'Gilroy', cursive !important;
+}
+
+#app {
+    top: 2vh;
+    left: .3vw;
+    width: 49%;
+    max-width: 49%;
+    position: absolute;
+    font-family: 'Gilroy', cursive !important;
+}
+
+.chat-window {
+    left: 0%;
+    width: 100% !important;
+    height: 40vh !important;
+    position: relative;
+    background: transparent !important;
+}
+
+.chat-messages {
+    margin: 0;
+}
+
+.chat-messages .msg {
+    margin-left: 0%;
+    text-indent: 0;
+}
+
+.chat-messages .msg.multiline {
+    color: #ededed;
+    padding: 1vh .4vw 1vh .3vw;
+    background: radial-gradient(83.87% 1043.26% at 50% 50%, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.16) 100%) !important;
+    border-left: 2.5px solid rgba(255, 0, 0, 0.8);
+    border-right: 2.5px solid rgba(255, 0, 0, 0.8);
+    border-radius: 5px;
+    margin: 1vh 0;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    line-height: 80%;
+}
+
+.chat-messages .msg.multiline > span > span > b {
+    display: block;
+    font-size: 1.8vh;
+    margin-bottom: .4vh;
+}
+
+.chat-messages .msg.multiline > span > span > span {
+    font-size: 1.4vh;
+}
+
+.chat-input {
+    top: .5vh;
+    left: .175%;
+    width: 100% !important;
+    position: relative;
+}
+
+.chat-input .input {
+    color: #ededed;
+    border: calc(0.092592592vh * 1) solid rgba(255, 255, 255, 0.30);
+    background: radial-gradient(83.87% 1043.26% at 50% 50%, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.16) 100%) !important;
+    border-radius: 5px;
+}
+
+.chat-input .input > .prefix.any {
+    display: none;
+}
+
+.chat-input .input > textarea {
+    padding: .6vh .4vw;
+}
+
+.chat-input .suggestions {
+    margin-top: .5vh;
+    background: transparent;
+}
+
+.chat-input .suggestions .suggestion {
+    color: rgba(237, 237, 237, .8);
+    border: calc(0.092592592vh * 1) solid rgba(255, 255, 255, 0.30);
+    padding: .2vh .3vw .4vh .3vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: linear-gradient(90deg, rgba(9, 177, 138, .60) 0%, rgba(255, 255, 255, 0) 90%) !important;
+    margin-bottom: .4vh;
+    border-radius: 5px;
+    border-left-color: rgb(9, 177, 138);
+}
+
+.chat-input .suggestions .suggestion p, .chat-input .suggestions .suggestion > p > span {
+    font-family: 'Tajawal', cursive !important;
+}
+
+.chat-input .suggestions .suggestion small {
+    color: rgba(237, 237, 237, .7);
+    font-family: 'Tajawal', cursive !important;
+}

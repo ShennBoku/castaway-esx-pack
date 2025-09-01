@@ -1,0 +1,35 @@
+# Cache
+cache/
+
+# dependencies
+**/node_modules
+/.pnp
+.pnp.js
+
+# Hmm
+**/Renewed-Banking/web/*
+!**/Renewed-Banking/web/public/
+**/uz_PureHud/resources/*
+!**/uz_PureHud/resources/build/
+
+# Logs
+*.log
+
+# Deny Folder
+kyg-setup/
+kyg_veh*/
+kyg_custom*/
+kyg_debug/
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.LAGI-BOBO-DND.rb
+.replxx_history
+InsertJob.sql
+
+npm-debug.log*
+.pnpm-debug.log

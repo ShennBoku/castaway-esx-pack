@@ -1,0 +1,256 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure the body takes up the full viewport */
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+iframe#videoPlayer {
+    top: -5%;
+    left: 9%;
+    width: 82%;
+    height: 82%;
+    z-index: -1;
+    position: fixed;
+    object-fit: fill;
+}
+
+/* Loading screen container */
+.kyogoLoading {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sky Background */
+.sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at bottom right, rgba(135, 207, 235, .85), rgba(135, 206, 235, .98));
+    /* background: linear-gradient(to bottom, rgba(135, 206, 235, .95), rgba(176, 226, 255, .95)); */
+    z-index: 1; /* Sky is behind the island */
+}
+
+/* Stars Container */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Stars are behind the island */
+}
+
+/* Star Dots */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0; /* Start invisible */
+}
+
+/* Island Image */
+.island {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('island.png'); /* Ensure this image exists in the same directory */
+    background-size: cover;
+    background-position: center;
+    z-index: 2; /* Island is above the sky and stars */
+}
+
+/* Clouds Container */
+.clouds {
+    position: absolute;
+    top: 1%; /* Clouds are positioned higher */
+    left: -10%;
+    width: 100%;
+    height: 14%; /* Limit the height for clouds */
+    z-index: 1; /* Clouds are above the island */
+}
+
+/* Cloud SVG */
+.cloud {
+    position: absolute;
+    width: 15%; /* Responsive cloud size */
+    height: auto;
+    opacity: 0.8;
+}
+
+/* Welcome Message */
+.welcome-message {
+    position: absolute;
+    top: 60%; /* Position above the progress bar */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Ensure exact centering */
+    font-size: 1.5rem; /* Smaller font size */
+    color: #ffffff; /* White text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+    z-index: 3; /* Above the island and clouds */
+    font-family: 'Pacifico', cursive; /* Use a playful font */
+    animation: float 3s ease-in-out infinite; /* Add a floating animation */
+    margin-bottom: 20px; /* Add space between the text and the progress bar */
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
+}
+
+/* Progress Bar Positioning */
+.progress-bar {
+    width: 50%;
+    max-width: 500px; /* Limit maximum width for larger screens */
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+    position: absolute;
+    top: 65%; /* Position below the welcome message */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4; /* Progress bar is above everything */
+}
+
+/* Progress bar fill */
+.progress {
+    width: 0%;
+    height: 100%;
+    background-color: #ffffff;
+    transition: width 0.5s ease;
+}
+
+/* Media Controls */
+.media-controls {
+    position: absolute;
+    bottom: 2%; /* Position below the progress bar */
+    left: 1.5%;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+    z-index: 4; /* Above everything */
+}
+
+/* Volume Level Box */
+.volume-box {
+    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+    border-radius: 5px;
+    padding: 10px; /* Padding to match button height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px; /* Fixed width */
+    height: 40px; /* Fixed height */
+}
+
+#volumeLevel {
+    color: #ffffff; /* White text */
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+}
+
+/* Media Control Buttons */
+.media-controls button {
+    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+    border: none;
+    border-radius: 5px;
+    padding: 10px; /* Padding to match volume box height */
+    width: 60px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    color: #ffffff; /* White text */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Brighter on hover */
+}
+
+.media-controls button i {
+    font-size: 1.2rem; /* Icon size */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .welcome-message {
+        font-size: 1.2rem; /* Smaller font size for tablets */
+    }
+
+    .progress-bar {
+        width: 70%; /* Wider progress bar on smaller screens */
+    }
+
+    .volume-box, .media-controls button {
+        width: 50px; /* Smaller width on tablets */
+        height: 35px; /* Smaller height on tablets */
+    }
+
+    .media-controls button i {
+        font-size: 1rem; /* Smaller icons on tablets */
+    }
+
+    #volumeLevel {
+        font-size: 0.9rem; /* Smaller text on tablets */
+    }
+
+    .cloud {
+        width: 20%; /* Larger clouds on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-message {
+        font-size: 1rem; /* Smaller font size for mobile */
+    }
+
+    .progress-bar {
+        width: 80%; /* Wider progress bar on very small screens */
+    }
+
+    .volume-box,
+    .media-controls button {
+        width: 40px; /* Smaller width on mobile */
+        height: 30px; /* Smaller height on mobile */
+    }
+
+    .media-controls button i {
+        font-size: 0.9rem; /* Smaller icons on mobile */
+    }
+
+    #volumeLevel {
+        font-size: 0.8rem; /* Smaller text on mobile */
+    }
+
+    .cloud {
+        width: 25%; /* Even larger clouds on very small screens */
+    }
+}

@@ -1,0 +1,5 @@
+AddEventHandler('esx:playerDropped', function (playerId)
+    local plyPed = GetPlayerPed(playerId)
+    local plyPos = GetEntityCoords(plyPed)
+    local plyIdtf = kyg.player.getIdentifiers(playerId)
+end)

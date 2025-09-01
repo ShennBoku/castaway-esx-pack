@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KYG Assets Page</title>
+    </head>
+    <body>
+        <script src="js/jquery-3.6.3.min.js"></script>
+        <script src="js/howler.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var howlAudioPlayer = null;
+                window.addEventListener('message', function(e) {
+                    // Interact Sound
+                    if(e.data.action == 'interact-sound') {
+                        if(howlAudioPlayer != null) howlAudioPlayer.stop();
+                        howlAudioPlayer = new Howl({ src: [`./sound/interact-${e.data.interact}.ogg`] });
+                        howlAudioPlayer.volume(e.data.volume);
+                        howlAudioPlayer.play();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
