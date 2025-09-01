@@ -18,6 +18,6 @@ end)
 -- :: Ped Action Events
 RegisterNetEvent('kyg_misc:gotTackled', function()
     local tackledTime = math.random(6000, 10000)
-    SetPedToRagdoll(cache.ped, tackledTime, tackledTime, 0, 0, 0, 0)
+    SetPedToRagdoll(cache.ped, tackledTime, tackledTime, 0, false, false, false)
 end)
 -- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;

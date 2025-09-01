@@ -1,7 +1,6 @@
 -- :: Ped Action Events
 RegisterNetEvent('kyg_misc:tacklePlayer', function(plyId)
-    local xTarget = ESX.GetPlayerFromId(plyId)
-    if xTarget then
+    if kyg.player.isValid(plyId) then
         TriggerClientEvent('kyg_misc:gotTackled', plyId)
     end
 end)

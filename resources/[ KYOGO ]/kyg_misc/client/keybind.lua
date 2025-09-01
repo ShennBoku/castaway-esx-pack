@@ -77,13 +77,38 @@ lib.addKeybind({
     end
 })
 
+lib.addKeybind({
+    name = 'kyg_tackle',
+    description = 'Tackle',
+    defaultKey = 'E', -- use 'LMENU' for Left ALT
+    onReleased = function(self)
+        -- Check if the player allowed to tackle
+        if cache.vehicle or not kyg.canAction({ 'weapon' }) then return end
+
+        if IsPedSprinting(cache.ped) or IsPedRunning(cache.ped) then
+            local coords = GetEntityCoords(cache.ped)
+            local targetId, targetPed, _ = lib.getClosestPlayer(coords, 1.6, false)
+            if not targetPed then return end
+            if IsPedInAnyVehicle(targetPed, true) or IsPedRagdoll(targetPed) then return end
+            self:disable(true)
+            TriggerServerEvent('kyg_misc:tacklePlayer', GetPlayerServerId(targetId))
+            lib.playAnim(cache.ped, 'swimming@first_person@diving', 'dive_run_fwd_-45_loop' ,3.0, 3.0, -1, 49, 0, false, 0, false)
+            RemoveAnimDict('swimming@first_person@diving')
+            Wait(250)
+            ClearPedTasks(cache.ped)
+            SetPedToRagdoll(cache.ped, 150, 150, 0, false, false, false)
+        end
+        SetTimeout(10000, function() self:disable(false) end)
+    end
+})
+
 local sbCooldown = false
 lib.addKeybind({
     name = 'kyg_seatbelt',
     description = 'Toggle Seatbelt',
     defaultKey = 'B',
     onPressed = function(self)
-        if sbCooldown then return end
+        if sbCooldown or not cache.vehicle then return end
         TriggerEvent('seatbelt:client:ToggleSeatbelt')
         sbCooldown = true Wait(1500) sbCooldown = false
     end
