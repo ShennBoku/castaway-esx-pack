@@ -48,29 +48,29 @@ const UsefulControls: React.FC<Props> = ({ infoVisible, setInfoVisible }) => {
                   <p>
                     <kbd>RMB</kbd>
                     <br />
-                    {Locale.ui_rmb}
+                    {Locale.ui_rmb ?? 'ui_rmb'}
                   </p>
                   <p>
                     <kbd>ALT + LMB</kbd>
                     <br />
-                    {Locale.ui_alt_lmb}
+                    {Locale.ui_alt_lmb ?? 'ui_alt_lmb'}
                   </p>
                   <p>
                     <kbd>CTRL + LMB</kbd>
                     <br />
-                    {Locale.ui_ctrl_lmb}
+                    {Locale.ui_ctrl_lmb ?? 'ui_ctrl_lmb'}
                   </p>
                   <p>
                     <kbd>SHIFT + Drag</kbd>
                     <br />
-                    {Locale.ui_shift_drag}
+                    {Locale.ui_shift_drag ?? 'ui_shift_drag'}
                   </p>
                   <p>
                     <kbd>CTRL + SHIFT + LMB</kbd>
                     <br />
-                    {Locale.ui_ctrl_shift_lmb}
+                    {Locale.ui_ctrl_shift_lmb ?? 'ui_ctrl_shift_lmb'}
                   </p>
-                  <div style={{ textAlign: 'right' }}>🐂</div>
+                  <div style={{ textAlign: 'right' }}>🐂 ☀️</div>
                 </div>
               </div>
             </FloatingFocusManager>

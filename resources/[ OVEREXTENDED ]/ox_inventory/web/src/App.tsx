@@ -22,7 +22,7 @@ debugData([
         slots: 50,
         label: 'Bob Smith',
         weight: 3000,
-        maxWeight: 5000,
+        maxWeight: 125000000,
         items: [
           {
             slot: 1,
@@ -57,6 +57,7 @@ debugData([
               imageurl: 'https://i.imgur.com/2xHhTTz.png',
             },
           },
+          { slot: 7, name: 'money', weight: 0, count: 5000 },
         ],
       },
       rightInventory: {

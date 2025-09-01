@@ -9,8 +9,8 @@ $secondaryColorDark: rgba(12, 12, 12, 0.8);
 
 $gridCols: 5;
 $gridRows: 5;
-$gridSize: 10.2vh;
-$gridGap: 2px;
+$gridSize: 11.5vh;
+$gridGap: 1px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
 body {
@@ -137,35 +137,41 @@ button:active {
   }
 
   .inventory-control-input {
+    width: 50%;
     transition: 200ms;
-    padding: 16px 8px;
-    border-radius: 2.5%;
+    padding: 12px 8px;
+    border-radius: 0.5vh;
     font-family: $mainFont;
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     outline: none;
     border: none;
     color: #fff;
-    background-color: $secondaryColor;
+    background-color: $secondaryColorDark;
     &:focus-within {
-      background-color: $secondaryColorDark;
+      background-color: $mainColor;
     }
   }
 
   .inventory-control-button {
-    font-size: 14px;
-    color: #fff;
-    background-color: $secondaryColor;
+    font-size: 16px;
+    background-color: $secondaryColorDark;
     transition: 200ms;
     padding: 12px 8px;
-    border-radius: 2.5%;
+    border-radius: 0.5vh;
     border: none;
     text-transform: uppercase;
     font-family: $mainFont;
-    width: 100%;
+    width: 30%;
     font-weight: 500;
     &:hover {
-      background-color: $secondaryColorDark;
+      background-color: $mainColor;
+    }
+
+    svg {
+      top: 40%;
+      transform: translateY(-50%);
+      position: relative;
     }
   }
 }
@@ -262,12 +268,79 @@ button:active {
   flex-direction: column;
   gap: calc($gridGap * 2);
 }
+
 .inventory-grid-header-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  p {
-    font-size: 16px;
+
+  .kyg-invinfo {
+    background-color: $secondaryColor;
+    text-align: center;
+    border-radius: 0.25vh;
+    border: 1px inset rgba(0, 0, 0, 0.2);
+    padding: 5px 7px 5px 7px;
+    margin: 0px 0px 3px 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+
+    .icon {
+      color: $mainColor;
+      padding: 2px 4px;
+      border-radius: 0.25vh;
+      background-color: rgba(255, 255, 255, .75)
+    }
+
+    .label {
+      top: 70%;
+      position: relative;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: bold;
+    }
+  }
+
+  .kyg-weightbox {
+    background-color: $secondaryColor;
+    text-align: center;
+    border-radius: 0.25vh;
+    border: 1px inset rgba(0, 0, 0, 0.2);
+    padding: 5px 7px 5px 7px;
+    margin: 0px 0px 3px 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+
+    .icon {
+      color: $mainColor;
+      padding: 2px 4px;
+      border-radius: 0.25vh;
+      background-color: rgba(255, 255, 255, .75)
+    }
+
+    .bar {
+      width: 75px;
+      padding: 2px 4px;
+      border-radius: 0.25vh;
+      background-color: rgba(255, 255, 255, 0.2);
+      .weight-bar {
+        top: 50%;
+        position: relative;
+        transform: translateY(-50%);
+      }
+    }
+
+    .size {
+      top: 70%;
+      position: relative;
+      transform: translateY(-50%);
+      font-size: 10px;
+    }
   }
 }
 
@@ -299,11 +372,9 @@ button:active {
   background-color: $mainColor;
   color: $textColor;
   text-align: center;
-  border-bottom-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  border-top-color: rgba(0, 0, 0, 0.2);
-  border-top-style: inset;
-  border-top-width: 1px;
+  border-radius: 0.25vh;
+  border: 1px inset rgba(0, 0, 0, 0.2);
+  margin: 1px;
 }
 
 .inventory-slot-label-text {
@@ -311,20 +382,21 @@ button:active {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 2px 3px;
+  padding: 1px 2px;
   font-weight: 400;
   font-family: $mainFont;
-  font-size: 12px;
+  font-size: 9px;
 }
 
 .inventory-slot-number {
-  background-color: white;
-  color: black;
+  top: 25%;
+  left: 50%;
+  opacity: .1;
+  transform: translate(-50%, -25%);
+  position: absolute;
+  color: white;
   height: 12px;
-  border-top-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  padding: 3px;
-  font-size: 12px;
+  font-size: 50px;
   font-family: $mainFont;
 }
 
@@ -355,9 +427,27 @@ button:active {
   align-self: flex-end;
   padding: 3px;
   gap: 3px;
-  p {
-    font-size: 12px;
-  }
+  p { font-size: 10px; }
+  width: 100%;
+  justify-content: space-between;
+}
+
+.item-slot-info-wrapper > .kyg-weight {
+  background-color: $mainColor;
+  color: $textColor;
+  text-align: center;
+  border-radius: 0.25vh;
+  border: 1px inset rgba(0, 0, 0, 0.2);
+  padding: 0px 2px 0px 2px;
+}
+
+.item-slot-info-wrapper > .kyg-count {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: $textColor;
+  text-align: center;
+  border-radius: 0.25vh;
+  border: 1px inset rgba(0, 0, 0, 0.2);
+  padding: 0px 2px 0px 2px;
 }
 
 .item-slot-currency-wrapper {
@@ -505,15 +595,21 @@ button:active {
 
 .durability-bar {
   background: rgba(0, 0, 0, 0.5);
-  height: 3px;
+  height: 2px;
   overflow: hidden;
+  margin: 1px 1px 1px 1px;
+  border-radius: 0.25vh;
+}
+
+.durability-bar .shennNullDurability {
+  background: rgba(255, 255, 255, .8) !important;
 }
 
 .weight-bar {
   background: rgba(0, 0, 0, 0.4);
   border: 1px inset rgba(0, 0, 0, 0.1);
   height: 0.8vh;
-  border-radius: 5%;
+  border-radius: 0.25vh;
   overflow: hidden;
 }
 

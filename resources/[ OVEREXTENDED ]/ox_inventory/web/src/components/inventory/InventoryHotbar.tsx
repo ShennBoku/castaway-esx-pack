@@ -40,26 +40,28 @@ const InventoryHotbar: React.FC = () => {
                 <div className="hotbar-slot-header-wrapper">
                   <div className="inventory-slot-number">{item.slot}</div>
                   <div className="item-slot-info-wrapper">
-                    <p>
-                      {item.weight > 0
-                        ? item.weight >= 1000
-                          ? `${(item.weight / 1000).toLocaleString('en-us', {
-                              minimumFractionDigits: 2,
-                            })}kg `
-                          : `${item.weight.toLocaleString('en-us', {
-                              minimumFractionDigits: 0,
-                            })}g `
-                        : ''}
-                    </p>
-                    <p>{item.count ? item.count.toLocaleString('en-us') + `x` : ''}</p>
+                    {item.weight > 0 ? (
+                      <p className="kyg-weight">
+                          {item.weight > 0
+                          ? item.weight >= 1000
+                              ? item.weight >= 1000000
+                              ? `${(item.weight / 1000000).toLocaleString('en-us', { minimumFractionDigits: 2 })}t `
+                              : `${(item.weight / 1000).toLocaleString('en-us', { minimumFractionDigits: 2 })}kg `
+                              : `${item.weight.toLocaleString('en-us', { minimumFractionDigits: 0 })}g `
+                          : ''}
+                      </p>
+                      ) : (<p></p>)}
+                      { item.count ? (<p className="kyg-count">
+                          {item.count.toLocaleString('en-us') + ((item.name == 'money' || item.name == 'black_money') ? '' : `x`)}
+                      </p>) : (<p></p>) }
                   </div>
                 </div>
                 <div>
-                  {item?.durability !== undefined && <WeightBar percent={item.durability} durability />}
                   <div className="inventory-slot-label-box">
                     <div className="inventory-slot-label-text">
                       {item.metadata?.label ? item.metadata.label : Items[item.name]?.label || item.name}
                     </div>
+                    <WeightBar percent={item.durability ?? 1208024102} durability />
                   </div>
                 </div>
               </div>
