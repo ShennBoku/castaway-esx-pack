@@ -8,11 +8,6 @@ cache/
 .pnp.js
 
 # Hmm
-**/ox_lib/web/*
-!**/ox_lib/web/build/
-**/ox_inventory/web/*
-!**/ox_inventory/web/build/
-!**/ox_inventory/web/images/
 **/esx_identity/web/*
 !**/esx_identity/web/dist/
 **/Renewed-Banking/web/*
@@ -28,7 +23,6 @@ kyg-setup/
 kyg_veh*/
 kyg_custom*/
 kyg_debug/
-zTempResources/
 
 # misc
 .DS_Store
