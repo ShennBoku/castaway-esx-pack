@@ -1,3 +1,37 @@
+local function onPlayerLoaded()
+    -- Carry System
+    LocalPlayer.state:set('isCarried', 0, true)
+    LocalPlayer.state:set('isCarrying', 0, true)
+
+    -- Escort System
+    LocalPlayer.state:set('attached', 0, true)
+    LocalPlayer.state:set('attaching', 0, true)
+end
+
+local function onPlayerUnloaded()
+    TriggerEvent('kyg_carry:forceStop')
+    TriggerEvent('kyg_escort:forceStop')
+
+    -- txAdmin Change
+    TriggerEvent('txcl:setPlayerMode', 'none')
+end
+
+RegisterNetEvent('esx:playerLoaded', onPlayerLoaded)
+RegisterNetEvent('esx:onPlayerDeath', onPlayerUnloaded)
+CreateThread(function()
+    if kyg.player.isLoaded() then
+        onPlayerLoaded()
+    end
+end)
+
+AddEventHandler('esx:onPlayerSpawn', function ()
+    if (LocalPlayer.state.attached or 0) > 0 then
+        local curAttachedPed = kyg.ped.getFromSID((LocalPlayer.state.attached or 0))
+        lib.playAnim(cache.ped, 'mp_arresting', 'idle', 8.0, -8.0, -1, 49, 0, false, 0, false)
+        AttachEntityToEntity(cache.ped, curAttachedPed, 1816, 0.25, 0.49, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+    end
+end)
+
 AddEventHandler('esx:enteringVehicle', function(vehicle, plate, seat, netId)
     local taskCleared = false
 

@@ -8,6 +8,10 @@ lib.addKeybind({
         if emotes:IsPlayerInAnim() then return emotes:EmoteCancel() end
         local isEmote = emotes:IsPlayerCrouched() or emotes:IsPlayerProne() or emotes:IsPlayerCrawling() or emotes:IsPlayerPointing() or emotes:IsPlayerInAnim()
 
+        if (LocalPlayer.state.isCarrying or 0) > 0 or (LocalPlayer.state.isCarried or 0) > 0 then
+            TriggerEvent('kyg_carry:forceStop') return
+        end
+
         if not lib.progressActive() and not cache.vehicle and not kyg.player.isDead() and not isEmote then
             if not kyg.player.isHandsup() and kyg.canAction({ 'weapon' }) then
                 if huCooldown then return end
