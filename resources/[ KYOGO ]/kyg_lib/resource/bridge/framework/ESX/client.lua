@@ -25,12 +25,12 @@ end)
 RegisterNetEvent('esx:onPlayerSpawn', function()
     svar.isDead = false
     LocalPlayer.state:set('dead', false, true)
-    LocalPlayer.state:set('isLoggedIn', false, false)
     Entity(cache.ped).state:set('dead', false, true)
 end)
 
 RegisterNetEvent('esx:playerLogout')
 AddEventHandler('esx:playerLogout', function()
+    LocalPlayer.state:set('isLoggedIn', false, false)
     svar.playerLoaded = false
     svar.playerData = {}
     svar.isDead = false
