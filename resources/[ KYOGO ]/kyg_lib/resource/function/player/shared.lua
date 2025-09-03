@@ -3,36 +3,27 @@
 function kyg.player.total()
     if IsServerSide then
         local total = { job = {}, gang = {}, group = {}, admin = 0, citizen = 0, maxcitizen = GetConvarInt('sv_maxclients', 0) }
-        for _, Player in pairs(kyogo.getPlayers()) do if Player then
+        for _, Player in pairs(kServer.Players) do
             total.citizen = total.citizen + 1
-            if Config.Framework == 'esx' then
-                if Player.job.name ~= 'unemployed' and Player.job.onDuty then
-                    total.job[Player.job.name] = (total.job[Player.job.name] or 0) + 1
-                end
-
-                local plyGroup = Player.getGroup()
-                if plyGroup ~= 'user' then
-                    total.admin = total.admin + 1
-                    total.group[plyGroup] = (total.group[plyGroup] or 0) + 1
-                end
-            elseif Config.Framework == 'qb' and not Player.Offline then
-                if Player.PlayerData.job.name ~= 'unemployed' and Player.PlayerData.job.onduty then
-                    total.job[Player.PlayerData.job.name] = (total.job[Player.PlayerData.job.name] or 0) + 1
-                end
-
-                if Player.PlayerData.gang.name ~= 'none' then
-                    total.gang[Player.PlayerData.gang.name] = (total.gang[Player.PlayerData.gang.name] or 0) + 1
-                end
-
-                if IsPlayerAceAllowed(Player.PlayerData.source, 'admin') then
-                    total.admin = total.admin + 1
-                    total.group.admin = (total.group.admin or 0) + 1
-                end
+            if Player.job.name ~= 'unemployed' and Player.job.onDuty then
+                total.job[Player.job.name] = (total.job[Player.job.name] or 0) + 1
             end
-        end end
+
+            if Player.group ~= 'user' then
+                total.admin = total.admin + 1
+                total.group[Player.group] = (total.group[Player.group] or 0) + 1
+            end
+        end
         return total
     end
     return lib.callback.await('kyg:getTotalPlayer', false)
+end
+
+--- Get Player List
+---@return table
+function kyg.player.getList()
+    if IsServerSide then return kServer.Players end
+    return lib.callback.await('kyg:getListPlayer', false)
 end
 
 --- Get Player Name
@@ -41,10 +32,8 @@ end
 ---@see GetPlayerName
 function kyg.player.getName(src)
     if IsServerSide then
-        local Player = kyogo.getPlyFromID(src)
-        if Player then
-            return Config.Framework == 'esx' and Player.name or ('%s %s'):format(Player.PlayerData.charinfo.firstname, Player.PlayerData.charinfo.lastname)
-        end
+        local Player = kServer.Players[tostring(src)]
+        if Player then return Player.detail.fullname end
         return GetPlayerName(src)
     end
     return lib.callback.await('kyg:getPlayerName', false, src)
