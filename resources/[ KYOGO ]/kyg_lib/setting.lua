@@ -7,13 +7,16 @@ Config = {}
     you do not know how to do it.
 ]]
 
-local esxHas = GetResourceState('es_extended') == 'started'
-local qbHas = GetResourceState('qb-core') == 'started'
+local esxHas = GetResourceState('es_extended') ~= 'missing'
+local qbHas = GetResourceState('qb-core') ~= 'missing'
 Config.Framework = esxHas and 'esx' or qbHas and 'qb' or 'none'
 
-local oxInvHas = GetResourceState('ox_inventory') == 'started'
+local oxInvHas = GetResourceState('ox_inventory') ~= 'missing'
 Config.Inventory = oxInvHas and 'ox' or 'none'
 
-Config.Identifier = 'steam'
+Config.Identifier = GetConvar('kyg:identifier', 'none')
+if Config.Framework == 'esx' then
+    Config.Identifier = GetConvar('esx:identifier', 'license')
+end
 
 Config.IsProduction = GetConvarInt('kyg:isProduction', 0) == 1
