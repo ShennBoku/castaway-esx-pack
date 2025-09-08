@@ -76,8 +76,18 @@ function HandlePlayerLoaded()
         svar.playerHandled = false
     end)
 
-    -- 1 second loop
+    -- 500ms loop
     CreateThread(function()
+        while svar.playerHandled do
+            Wait(500)
+
+            -- Fix Minimap Zoom
+            if GetInteriorFromEntity(cache.ped) ~= 0 then
+                SetRadarZoom(0)
+            else
+                SetRadarZoom(1100)
+            end
+        end
     end)
 end
 
