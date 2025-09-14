@@ -26,10 +26,16 @@ end exports('playInteractWithinDistance', kyg.util.playInteractWithinDistance)
 ---@param freeze? boolean
 ---@param invincible? boolean
 ---@param block_non_temporary_events? boolean
+---@param delete_if_already? boolean
 ---@return number|boolean pedId will return false if the ped already exists
-function kyg.util.createPed(id, model, coord, freeze, invincible, block_non_temporary_events)
+function kyg.util.createPed(id, model, coord, freeze, invincible, block_non_temporary_events, delete_if_already)
     local resource = GetInvokingResource() or cache.resource
     kyg.systemCached.createdPedData[resource] = kyg.systemCached.createdPedData[resource] or {}
+
+    if delete_if_already and kyg.systemCached.createdPedData[resource][id] ~= nil then
+        kyg.util.deletePed(id, resource)
+        Wait(10)
+    end
 
     if kyg.systemCached.createdPedData[resource][id] ~= nil then
         lib.print.verbose('Can\'t create ped because ped id ' .. id .. ' on resource ' .. resource .. ' already exist.')

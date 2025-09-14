@@ -5,24 +5,48 @@ function kyg.ped.getFromSID(plyId)
     return GetPlayerPed(GetPlayerFromServerId(plyId))
 end
 
----@param ped number | nil if nil, will use cache.ped
----@param vehId number | nil if nil, will use cache.vehicle
+---@param vehId? number if nil, will use cache.vehicle
+---@param pedId? number if nil, will use cache.ped
 ---@return boolean
-function kyg.ped.isDriver(ped, vehId)
-    ped = ped or cache.ped
+function kyg.ped.isDriver(vehId, pedId)
     vehId = vehId or cache.vehicle
+    pedId = pedId or cache.ped
     if vehId == nil or not DoesEntityExist(vehId) then return false end
-    return GetPedInVehicleSeat(vehId, -1) == ped
+    return GetPedInVehicleSeat(vehId, -1) == pedId
 end
 
----@param ped number | nil if nil, will use cache.ped
----@param vehId number | nil if nil, will use cache.vehicle
+---@param vehId? number if nil, will use cache.vehicle
+---@param pedId? number if nil, will use cache.ped
 ---@return boolean
-function kyg.ped.isInsideVehicle(ped, vehId)
-    ped = ped or cache.ped
+function kyg.ped.isInsideVehicle(vehId, pedId)
     vehId = vehId or cache.vehicle
     if vehId == nil or not DoesEntityExist(vehId) then return false end
-    return IsPedInVehicle(ped, vehId, false)
+    return IsPedInVehicle(pedId or cache.ped, vehId, false)
+end
+
+---@param coords vector3
+---@param maxDistance? number default 3.0
+---@param pedId? number
+---@return boolean isNear
+---@return number actualDistance
+function kyg.ped.isNearCoords(coords, maxDistance, pedId)
+    pedId = pedId or cache.ped
+    if not DoesEntityExist(pedId) then return false, 0.0 end
+
+    local maxDist = maxDistance or 3.0
+    local pedCoords = GetEntityCoords(pedId)
+
+    local dx = pedCoords.x - coords.x
+    local dy = pedCoords.y - coords.y
+    local dz = pedCoords.z - coords.z
+    local squaredDist = dx * dx + dy * dy + dz * dz
+
+    if squaredDist > (maxDist * maxDist) then
+        return false, math.sqrt(squaredDist)
+    end
+
+    local actualDistance = math.sqrt(squaredDist)
+    return actualDistance <= maxDist, actualDistance
 end
 
 --- Play Animation on Ped
