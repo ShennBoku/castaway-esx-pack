@@ -31,6 +31,42 @@ ConfigCL.DiscordPresence = {
     end
 }
 
+ConfigCL.CloseInterface = {
+    hud = function()
+        kyg.util.isResourceStarted('jg-hud', function()
+            exports['jg-hud']:toggleHud(false)
+            exports['jg-hud']:toggleVehicleControl(false)
+        end)
+        kyg.util.isResourceStarted('0r-hud-v3', function()
+            exports['0r-hud-v3']:ToggleVisible(false)
+        end)
+    end,
+    phone = function()
+        kyg.util.isResourceStarted('gksphone', function()
+            if exports.gksphone:IsInCall() then exports.gksphone:EndCall() end
+            if exports.gksphone:isPhoneOpen() then exports.gksphone:PhoneClose() end
+        end)
+        kyg.util.isResourceStarted('qs-smartphone-pro', function()
+            if exports['qs-smartphone-pro']:isInCall() then exports['qs-smartphone-pro']:endCall() end
+            if exports['qs-smartphone-pro']:InPhone() then exports['qs-smartphone-pro']:ClosePhone() end
+        end)
+    end,
+    inventory = function()
+        if Config.Inventory == 'ox_inventory' then
+            if LocalPlayer.state.invOpen then
+                exports.ox_inventory:closeInventory()
+            end
+        elseif Config.Inventory == 'qs-inventory' then
+            if exports['qs-inventory']:inInventory() then
+                ExecuteCommand('closeinv')
+            end
+        end
+    end,
+    custom = function()
+        -- Trigger to close ui
+    end
+}
+
 ConfigCL.CantHandleAction = function()
     -- if exports.kyg_ui:isMenuOpened() or exports.kyg_ui:isClothingMenuOpened() or exports.ox_lib:isZoneCreatorActive() then
     --     return true

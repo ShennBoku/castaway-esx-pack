@@ -19,6 +19,37 @@ function kyg.util.playInteractWithinDistance(coord, distance, sound, volume)
     end
 end exports('playInteractWithinDistance', kyg.util.playInteractWithinDistance)
 
+--- Close All User Interface
+---@param include? string[] { 'hud', 'phone' }
+---@param reason? string
+function kyg.util.closeAllInterface(include, reason)
+    include = include or {}
+    if not reason then
+        if LocalPlayer.state.laststand or LocalPlayer.state.dead then
+            reason = 'PLAYER_DEAD'
+        end
+    end
+
+    lib.closeAlertDialog()
+    lib.closeInputDialog()
+    if lib.getOpenMenu() ~= nil then lib.hideMenu(false) end
+    if lib.progressActive() then lib.cancelProgress() end
+    if lib.skillCheckActive() then lib.cancelSkillCheck() end
+    if lib.getOpenContextMenu() ~= nil then lib.hideContext(false) end
+    ConfigCL.CloseInterface.inventory()
+
+    for i = 1, #include do
+        if include[i] == 'hud' then
+            ConfigCL.CloseInterface.hud()
+        elseif include[i] == 'phone' then
+            ConfigCL.CloseInterface.phone()
+        end
+    end
+    ConfigCL.CloseInterface.custom()
+
+    TriggerEvent('kyg_lib:closingAllInterface', reason or 'UNKNOWN_REASON')
+end
+
 --- Create Ped
 ---@param id string
 ---@param model string
