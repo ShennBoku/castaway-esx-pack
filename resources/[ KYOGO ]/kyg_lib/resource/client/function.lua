@@ -110,5 +110,17 @@ function HandleResourceStopped(resName)
                 kyg.util.deleteBlip(blipName, resName)
             end
         end
+
+        -- Delete Created Ped Zone
+        if kyg.systemCached.createdPedZoneData[resName] ~= nil and next(kyg.systemCached.createdPedZoneData[resName]) ~= nil then
+            for pedZoneId, pedZoneSphere in pairs(kyg.systemCached.createdPedZoneData[resName]) do
+                if pedZoneSphere.pedData.id and DoesEntityExist(pedZoneSphere.pedData.id) then
+                    exports.ox_target:removeLocalEntity(pedZoneSphere.pedData.id)
+                    DeleteEntity(pedZoneSphere.pedData.id)
+                end
+                pedZoneSphere:remove()
+                kyg.systemCached.createdPedZoneData[resName][pedZoneId] = nil
+            end
+        end
     end
 end

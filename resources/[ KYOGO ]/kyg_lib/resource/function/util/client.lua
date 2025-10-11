@@ -50,6 +50,54 @@ function kyg.util.closeAllInterface(include, reason)
     TriggerEvent('kyg_lib:closingAllInterface', reason or 'UNKNOWN_REASON')
 end
 
+--- Create Ped with Radius
+---@param id string
+---@param model string
+---@param coord vector3 | vector4
+---@param option? table
+function kyg.util.radiusPed(id, model, coord, option)
+    local resource = GetInvokingResource() or cache.resource
+    kyg.systemCached.createdPedZoneData[resource] = kyg.systemCached.createdPedZoneData[resource] or {}
+
+    if kyg.systemCached.createdPedZoneData[resource][id] ~= nil then
+        lib.print.verbose('Can\'t create ped because ped id ' .. id .. ' on resource ' .. resource .. ' already exist.')
+        return false
+    elseif not Config.Peds.Hash[model] then
+        lib.print.verbose('Can\'t create ped with model ' .. model .. ' is not registered.')
+        return false
+    end
+
+    if type(option) ~= 'table' then option = {} end
+    kyg.systemCached.createdPedZoneData[resource][id] = lib.zones.sphere({
+        coords = vec3(coord.x, coord.y, coord.z),
+        radius = option.radius or 25.0,
+        onEnter = function(self)
+            local hashModel = lib.requestModel(self.pedData.model)
+            self.pedData.id = CreatePed(4, hashModel, self.pedData.coords.x, self.pedData.coords.y, self.pedData.coords.z-1.0, self.pedData.coords.w or 0.0, false, true)
+            SetModelAsNoLongerNeeded(hashModel)
+
+            if not self.pedData.id then return end
+            SetEntityHeading(self.pedData.id, self.pedData.coords.w or 0.0)
+            FreezeEntityPosition(self.pedData.id, self.pedData.option.freeze or true)
+            SetEntityInvincible(self.pedData.id, self.pedData.option.invincible or true)
+            SetBlockingOfNonTemporaryEvents(self.pedData.id, self.pedData.option.block_non_temporary_events or true)
+
+            if self.pedData.option.target then
+                exports.ox_target:addLocalEntity(self.pedData.id, self.pedData.option.target)
+            end
+        end,
+        onExit = function(self)
+            if self.pedData.id and DoesEntityExist(self.pedData.id) then
+                exports.ox_target:removeLocalEntity(self.pedData.id)
+                DeleteEntity(self.pedData.id)
+            end
+            self.pedData.id = nil
+        end,
+        debug = not Config.IsProduction,
+        pedData = { id = nil, model = model, coords = coord, option = option }
+    })
+end
+
 --- Create Ped
 ---@param id string
 ---@param model string
@@ -76,8 +124,9 @@ function kyg.util.createPed(id, model, coord, freeze, invincible, block_non_temp
         return false
     end
 
-    lib.requestModel(GetHashKey(model))
-    local ped = CreatePed(4, Config.Peds.Hash[model], coord.x, coord.y, coord.z-1.0, coord.w, false, true)
+    model = lib.requestModel(model)
+    local ped = CreatePed(4, model, coord.x, coord.y, coord.z-1.0, coord.w, false, true)
+    SetModelAsNoLongerNeeded(model)
     SetEntityHeading(ped, coord.w)
     FreezeEntityPosition(ped, freeze or true)
     SetEntityInvincible(ped, invincible or true)

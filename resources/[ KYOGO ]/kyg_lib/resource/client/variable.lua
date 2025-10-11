@@ -16,3 +16,4 @@ _ENV.svar = svar
 kyg.systemCached = {}
 kyg.systemCached.createdPedData = {}
 kyg.systemCached.createdBlipData = {}
+kyg.systemCached.createdPedZoneData = {}
