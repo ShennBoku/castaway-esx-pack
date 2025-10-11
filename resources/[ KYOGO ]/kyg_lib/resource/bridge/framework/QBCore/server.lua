@@ -4,9 +4,12 @@ if Config.Framework ~= 'qb' then return end
 QBCore = exports['qb-core']:GetCoreObject()
 
 AddEventHandler('QBCore:Server:PlayerLoaded', function(Player)
+    local group, rank = kyg.player.getAce(Player.PlayerData.source)
+
     kServer.Players[tostring(Player.PlayerData.source)] = {
         id = Player.PlayerData.citizenid,
-        group = IsPlayerAceAllowed(Player.PlayerData.source, 'admin') and 'admin' or 'user',
+        rank = rank,
+        group = group,
         source = Player.PlayerData.source,
         identifier = Player.PlayerData.license,
         job = {
@@ -15,7 +18,8 @@ AddEventHandler('QBCore:Server:PlayerLoaded', function(Player)
             grade = { id = Player.PlayerData.job.grade.level, name = Player.PlayerData.job.grade.name:lower(), label = Player.PlayerData.job.grade.name },
             salary = Player.PlayerData.job.payment,
             isBoss = Player.PlayerData.job.isboss or false,
-            onDuty = Player.PlayerData.job.onduty or false
+            onDuty = Player.PlayerData.job.onduty or false,
+            whitelist = false
         },
         gang = {
             name = Player.PlayerData.gang.name,
@@ -35,6 +39,14 @@ AddEventHandler('QBCore:Server:PlayerLoaded', function(Player)
         },
         licenses = kyg.player.getIdentifiers(Player.PlayerData.source)
     }
+
+    kServer.PlayersFunc[tostring(Player.PlayerData.source)] = {
+        setJob = Player.Functions.SetJob,
+        addMoney = Player.Functions.AddMoney,
+        removeMoney = Player.Functions.RemoveMoney
+    }
+    TriggerClientEvent('kyg:playerLoaded', Player.PlayerData.source, kServer.Players[tostring(Player.PlayerData.source)])
+    TriggerEvent('kyg:playerLoaded', Player.PlayerData.source, kServer.Players[tostring(Player.PlayerData.source)])
 end)
 
 AddEventHandler('QBCore:Server:OnJobUpdate', function(Source, NewJob)

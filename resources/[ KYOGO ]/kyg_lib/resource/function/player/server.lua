@@ -1,5 +1,47 @@
 ---@diagnostic disable: duplicate-set-field
 
+--- Get Player Ace
+---@param plyId number|string Player ID
+---@return string, number
+function kyg.player.getAce(plyId)
+    for _ = 1, #ConfigSV.GroupGrade do
+        if IsPlayerAceAllowed(plyId, ConfigSV.GroupGrade[_].ace) then
+            return ConfigSV.GroupGrade[_].ace, ConfigSV.GroupGrade[_].rank
+        end
+    end
+    return 'user', 0
+end
+
+--- Get Player Data
+---@param plyId number|string Player ID
+---@return table, table
+function kyg.player.getData(plyId)
+    plyId = tostring(plyId)
+    return kServer.Players[plyId], kServer.PlayersFunc[plyId]
+end
+
+--- Get Player Rank
+---@param plyId number|string Player ID
+---@return number
+function kyg.player.getRank(plyId)
+    local plyData = kServer.Players[plyId]
+    if plyData then return plyData.rank end
+
+    local plyAce, plyRank = kyg.player.getAce(plyId)
+    return plyRank
+end
+
+--- Get Player Group
+---@param plyId number|string Player ID
+---@return string
+function kyg.player.getGroup(plyId)
+    local plyData = kServer.Players[plyId]
+    if plyData then return plyData.group end
+
+    local plyAce, plyRank = kyg.player.getAce(plyId)
+    return plyAce
+end
+
 --- Check Player is Dead (Server-Side)
 ---@param plyId number Player ID
 ---@return boolean

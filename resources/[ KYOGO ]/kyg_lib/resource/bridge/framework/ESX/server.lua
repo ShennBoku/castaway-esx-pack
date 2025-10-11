@@ -4,9 +4,12 @@ if Config.Framework ~= 'esx' then return end
 ESX = exports['es_extended']:getSharedObject()
 
 AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
+    local group, rank = kyg.player.getAce(playerId)
+
     kServer.Players[tostring(playerId)] = {
         id = xPlayer.ssn,
-        group = xPlayer.group,
+        rank = rank,
+        group = group,
         source = playerId,
         identifier = xPlayer.identifier,
         job = {
@@ -15,12 +18,13 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
             grade = { id = xPlayer.job.grade, name = xPlayer.job.grade_name, label = xPlayer.job.grade_label },
             salary = xPlayer.job.grade_salary,
             isBoss = xPlayer.job.grade_isBoss or false,
-            onDuty = xPlayer.job.onDuty or false
+            onDuty = xPlayer.job.onDuty or false,
+            whitelist = xPlayer.job.whitelist or false
         },
         gang = {
             name = 'none',
-            label = 'None',
-            grade = { id = 0, name = 'none', label = 'None' },
+            label = 'No Gang',
+            grade = { id = 0, name = 'unaffiliated', label = 'Not Affiliated' },
             isBoss = false
         },
         detail = {
@@ -30,11 +34,20 @@ AddEventHandler('esx:playerLoaded', function(playerId, xPlayer)
             dob = xPlayer.variables.dateofbirth,
             height = xPlayer.variables.height,
             sex = xPlayer.variables.sex:lower(),
-            nationality = 'none',
+            nationality = xPlayer.metadata.nationality or 'None',
             phone_number = '00000000'
         },
         licenses = kyg.player.getIdentifiers(playerId)
     }
+
+    kServer.PlayersFunc[tostring(playerId)] = {
+        source = xPlayer.source,
+        setJob = xPlayer.setJob,
+        addMoney = xPlayer.addAccountMoney,
+        removeMoney = xPlayer.removeAccountMoney
+    }
+    TriggerClientEvent('kyg:playerLoaded', playerId, kServer.Players[tostring(playerId)])
+    TriggerEvent('kyg:playerLoaded', playerId, kServer.Players[tostring(playerId)])
 end)
 
 AddEventHandler('esx:setJob', function(playerId, newJob, lastJob)

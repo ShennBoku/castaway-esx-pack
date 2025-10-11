@@ -2,3 +2,4 @@
 kServer = {}
 
 kServer.Players = {}
+kServer.PlayersFunc = {}
